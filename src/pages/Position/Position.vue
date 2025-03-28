@@ -10,26 +10,12 @@
           <q-separator />
 
           <q-card-section>
-            <span
-              >{{ $t('confirmDelete') }}</span
-            >
+            <span>{{ $t('confirmDelete') }}</span>
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn
-              flat
-              :disable="deleteProcess"
-              :label="$t('cancel')"
-              color="primary"
-              v-close-popup
-            />
-            <q-btn
-              flat
-              :label="$t('btnDelete')"
-              color="negative"
-              @click="deletePosition"
-              :loading="deleteProcess"
-            />
+            <q-btn flat :disable="deleteProcess" :label="$t('cancel')" color="primary" v-close-popup />
+            <q-btn flat :label="$t('btnDelete')" color="negative" @click="deletePosition" :loading="deleteProcess" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -45,49 +31,20 @@
 
           <q-card-section>
             <div class="q-mt-sm">
-              <q-input
-                ref="addCategoryOneRef"
-                standout
-                clearable
-                maxlength="250"
-                v-model="tempPositionResource.name"
-                type="text"
-                :label="$t('nameColon')"
-                :label-color="colorFocusCategory[0]"
-                @focus="colorFocusCategory[0] = 'white'"
-                @blur="colorFocusCategory[0] = ''"
-                :rules="[(val) => !!val || $t('nameRequired')]"
-                lazy-rules="ondemand"
-                hide-bottom-space
-              >
+              <q-input ref="addCategoryOneRef" standout clearable maxlength="250" v-model="tempPositionResource.name"
+                type="text" :label="$t('nameColon')" :label-color="colorFocusCategory[0]"
+                @focus="colorFocusCategory[0] = 'white'" @blur="colorFocusCategory[0] = ''"
+                :rules="[(val) => !!val || $t('nameRequired')]" lazy-rules="ondemand" hide-bottom-space>
               </q-input>
             </div>
           </q-card-section>
 
           <q-card-actions align="right">
-            <q-btn
-              flat
-              :disable="positionProcess"
-              :label="$t('cancel')"
-              color="primary"
-              v-close-popup
-            />
-            <q-btn
-              v-show="!showEdit"
-              flat
-              :label="$t('btnAdd')"
-              color="info"
-              @click="addPosition"
-              :loading="positionProcess"
-            />
-            <q-btn
-              v-show="showEdit"
-              flat
-              :label="$t('btnEdit')"
-              color="info"
-              @click="editPosition"
-              :loading="positionProcess"
-            />
+            <q-btn flat :disable="positionProcess" :label="$t('cancel')" color="primary" v-close-popup />
+            <q-btn v-show="!showEdit" flat :label="$t('btnAdd')" color="info" @click="addPosition"
+              :loading="positionProcess" />
+            <q-btn v-show="showEdit" flat :label="$t('btnEdit')" color="info" @click="editPosition"
+              :loading="positionProcess" />
           </q-card-actions>
         </q-card>
       </q-dialog>
@@ -99,52 +56,27 @@
           </div>
         </div>
 
-        <q-table
-          class="table-content"
-          :rows="tempListPosition"
-          :columns="headerTable"
-          row-key="id"
-          flat
-          bordered
-          dark
-          :loading="loadingData"
-          v-model:pagination="pagination"
-          :rows-per-page-options="[5, 10, 15, 20]"
-        >
+        <q-table class="table-content" :rows="tempListPosition" :columns="headerTable" row-key="id" flat bordered dark
+          :loading="loadingData" v-model:pagination="pagination" :rows-per-page-options="[5, 10, 15, 20]">
           <template v-slot:header-cell-name="props">
             <q-th :props="props">
               <div :style="`min-width: ${widthName}`">
-                <q-input
-                  @update:model-value="filterNamePosition"
-                  dark
-                  dense
-                  standout
-                  v-model="filterModel.name"
-                  input-class="text-right"
-                  :label="labelNameFocus[0]"
-                  :label-color="labelColorFocus[0]"
-                  @focus="
+                <q-input @update:model-value="filterNamePosition" dark dense standout v-model="filterModel.name"
+                  input-class="text-right" :label="labelNameFocus[0]" :label-color="labelColorFocus[0]" @focus="
                     labelColorFocus[0] = 'black';
-                    labelNameFocus[0] = $t('searchByName');
-                    widthName = '200px';
-                  "
-                  @blur="
+                  labelNameFocus[0] = $t('searchByName');
+                  widthName = '200px';
+                  " @blur="
                     labelColorFocus[0] = 'white';
-                    labelNameFocus[0] = props.col.label;
-                    widthName = '130px';
-                  "
-                >
+                  labelNameFocus[0] = props.col.label;
+                  widthName = '130px';
+                  ">
                   <template v-slot:append>
                     <q-icon v-if="!filterModel.name" name="search" />
-                    <q-icon
-                      v-else
-                      name="clear"
-                      class="cursor-pointer"
-                      @click="
-                        filterModel.name = '';
-                        filterNamePosition();
-                      "
-                    />
+                    <q-icon v-else name="clear" class="cursor-pointer" @click="
+                      filterModel.name = '';
+                    filterNamePosition();
+                    " />
                   </template>
                 </q-input>
               </div>
@@ -154,26 +86,14 @@
           <template v-slot:body-cell-action="props">
             <q-td :props="props">
               <div>
-                <q-btn
-                  style="width: 60px"
-                  dense
-                  color="white"
-                  text-color="black"
-                  :label="$t('btnEdit')"
-                  @click="openEditPosition(props.value)"
-                />
+                <q-btn style="width: 60px" dense color="white" text-color="black" :label="$t('btnEdit')"
+                  @click="openEditPosition(props.value)" />
               </div>
               <div class="q-mt-sm">
-                <q-btn
-                  style="width: 60px"
-                  dense
-                  color="negative"
-                  :label="$t('btnDelete')"
-                  @click="
-                    idDelete = props.value;
-                    showDelete = true;
-                  "
-                />
+                <q-btn style="width: 60px" dense color="negative" :label="$t('btnDelete')" @click="
+                  idDelete = props.value;
+                showDelete = true;
+                " />
               </div>
             </q-td>
           </template>
@@ -257,11 +177,11 @@ export default defineComponent({
     ...mapActions("auth", ["validateToken"]),
 
     async getAllPosition() {
-      try {
-        this.loadingData = true;
+  try {
+    this.loadingData = true;
 
-        let isValid = await this.validateToken();
-        if (!isValid) this.$router.replace("/login");
+    let isValid = await this.validateToken();
+    if (!isValid) this.$router.replace("/login");
 
         // Request API
         let result = await api
@@ -535,8 +455,10 @@ export default defineComponent({
 <style lang="scss" scoped>
 .container {
   position: relative;
+
   .table-component {
     position: relative;
+
     .table-content {
       /* height or max-height is important */
       height: 600px;

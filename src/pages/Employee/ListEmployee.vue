@@ -1072,6 +1072,9 @@ export default defineComponent({
       }
     },
     async getPosition() {
+      let isValid = await this.validateToken();
+      if (!isValid) this.$router.replace("/login");
+
       // Request API
       let result = await api
         .get("/api/v1/position")
