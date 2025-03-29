@@ -84,12 +84,7 @@ License: CC BY 3.0
           </div>
         </div>
 
-        <div class="bottom-login display-center">
-          <a href="https://github.com/dong-nguyen-hd" target="_blank">
-            <q-icon size="18px" name="fab fa-github" />
-            {{ $t("myself") }}
-          </a>
-        </div>
+
       </div>
     </div>
   </div>
